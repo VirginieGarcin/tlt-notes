@@ -2,6 +2,7 @@ package com.tlt.notes.controller;
 
 import com.tlt.notes.dto.NoteDto;
 import com.tlt.notes.dto.NoteLightDto;
+import com.tlt.notes.dto.NoteStatsDto;
 import com.tlt.notes.model.Note;
 import com.tlt.notes.model.NoteLight;
 import com.tlt.notes.service.NoteService;
@@ -35,6 +36,12 @@ public class NoteController {
     @ResponseBody
     public NoteDto getNoteById(@PathVariable("id") String id) {
         return noteService.findById(id).map(this::convertToDto).orElse(null);
+    }
+
+    @GetMapping("/{id}/stats")
+    @ResponseBody
+    public NoteStatsDto getNoteStats(@PathVariable("id") String id) {
+        return noteService.getStats(id);
     }
 
     @PostMapping("/")
