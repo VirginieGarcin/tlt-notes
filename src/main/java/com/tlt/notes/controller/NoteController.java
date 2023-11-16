@@ -5,6 +5,7 @@ import com.tlt.notes.dto.NoteLightDto;
 import com.tlt.notes.model.Note;
 import com.tlt.notes.model.NoteLight;
 import com.tlt.notes.service.NoteService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,13 +40,13 @@ public class NoteController {
     @PostMapping("/")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public NoteDto createNote(@RequestBody NoteDto noteDto) {
+    public NoteDto createNote(@Valid @RequestBody NoteDto noteDto) {
         return convertToDto(noteService.create(convertToEntity(noteDto)));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public NoteDto updateNote(@PathVariable("id") String id, @RequestBody NoteDto noteDto) {
+    public NoteDto updateNote(@PathVariable("id") String id, @Valid @RequestBody NoteDto noteDto) {
         return noteService.findById(id).map(existingNote -> convertToDto(noteService.update(id, convertToEntity(noteDto))))
                 .orElse(null);
     }
