@@ -27,8 +27,8 @@ public class NoteController {
     @GetMapping("/")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public Page<NoteLightDto> getNotesList(@PageableDefault Pageable pageable) {
-        return noteService.findAll(pageable).map(this::convertToDtoLight);
+    public Page<NoteLightDto> getNotesList(@PageableDefault Pageable pageable, @RequestParam(required = false) String tag) {
+        return noteService.findAll(pageable, tag).map(this::convertToDtoLight);
     }
 
     @GetMapping("/{id}")

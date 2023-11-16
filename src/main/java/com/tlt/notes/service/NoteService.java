@@ -29,8 +29,12 @@ public class NoteService {
         return noteRepository.findById(id);
     }
 
-    public Page<NoteLight> findAll(Pageable pageable) {
-        return noteRepository.findAllByOrderByCreatedAtDesc(pageable);
+    public Page<NoteLight> findAll(Pageable pageable, String tagFilter) {
+        if (tagFilter == null) {
+            return noteRepository.findAllByOrderByCreatedAtDesc(pageable);
+        } else {
+            return noteRepository.findAllByTagsContainsOrderByCreatedAtDesc(pageable, tagFilter);
+        }
     }
 
     public Note create(Note note) {

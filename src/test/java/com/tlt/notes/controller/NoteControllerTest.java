@@ -27,9 +27,9 @@ class NoteControllerTest {
                 new Note("id1", "Some note", Instant.ofEpochSecond(100), "", List.of())
         ));
 
-        when(noteService.findAll(PageRequest.of(0, 5))).thenReturn(mockNotes);
+        when(noteService.findAll(PageRequest.of(0, 5), null)).thenReturn(mockNotes);
 
-        var notes = new NoteController(noteService, modelMapper).getNotesList(PageRequest.of(0, 5));
+        var notes = new NoteController(noteService, modelMapper).getNotesList(PageRequest.of(0, 5), null);
         assertEquals(2, notes.getContent().size());
     }
 }
