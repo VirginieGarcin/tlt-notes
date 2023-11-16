@@ -2,9 +2,10 @@ package com.tlt.notes.service;
 
 import com.tlt.notes.model.Note;
 import com.tlt.notes.repository.NoteRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,8 +28,8 @@ public class NoteService {
         return noteRepository.findById(id);
     }
 
-    public List<Note> findAll() {
-        return noteRepository.findAllByOrderByCreatedAtDesc();
+    public Page<Note> findAll(Pageable pageable) {
+        return noteRepository.findAllByOrderByCreatedAtDesc(pageable);
     }
 
     public Note create(Note note) {

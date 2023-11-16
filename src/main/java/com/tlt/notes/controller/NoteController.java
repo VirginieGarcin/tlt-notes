@@ -4,11 +4,11 @@ import com.tlt.notes.dto.NoteDto;
 import com.tlt.notes.model.Note;
 import com.tlt.notes.service.NoteService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/notes")
@@ -24,10 +24,8 @@ public class NoteController {
     @GetMapping("/")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public List<NoteDto> getAllNotes() {
-        return noteService.findAll().stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+    public Page<NoteDto> getNotesList(@PageableDefault Pageable pageable) {
+        return noteService.findAll(pageable).map(this::convertToDto);
     }
 
     @GetMapping("/{id}")

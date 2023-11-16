@@ -1,10 +1,10 @@
 package com.tlt.notes.repository;
 
 import com.tlt.notes.model.Note;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.List;
-
 public interface NoteRepository extends MongoRepository<Note, String> {
-    List<Note> findAllByOrderByCreatedAtDesc();
+    Page<Note> findAllByOrderByCreatedAtDesc(Pageable pageRequest);
 }
