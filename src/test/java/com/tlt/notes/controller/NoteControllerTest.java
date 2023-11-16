@@ -1,6 +1,7 @@
 package com.tlt.notes.controller;
 
 import com.tlt.notes.model.Note;
+import com.tlt.notes.model.NoteLight;
 import com.tlt.notes.service.NoteService;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -21,7 +22,7 @@ class NoteControllerTest {
     @Test
     void getAllNotes_ReturnsListOfNotes() {
         var noteService = mock(NoteService.class);
-        var mockNotes = new PageImpl<>(List.of(
+        var mockNotes = new PageImpl<NoteLight>(List.of(
                 new Note("id2", "Other note", Instant.ofEpochSecond(200), "", List.of()),
                 new Note("id1", "Some note", Instant.ofEpochSecond(100), "", List.of())
         ));

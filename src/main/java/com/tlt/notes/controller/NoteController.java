@@ -1,7 +1,9 @@
 package com.tlt.notes.controller;
 
 import com.tlt.notes.dto.NoteDto;
+import com.tlt.notes.dto.NoteLightDto;
 import com.tlt.notes.model.Note;
+import com.tlt.notes.model.NoteLight;
 import com.tlt.notes.service.NoteService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -24,8 +26,8 @@ public class NoteController {
     @GetMapping("/")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public Page<NoteDto> getNotesList(@PageableDefault Pageable pageable) {
-        return noteService.findAll(pageable).map(this::convertToDto);
+    public Page<NoteLightDto> getNotesList(@PageableDefault Pageable pageable) {
+        return noteService.findAll(pageable).map(this::convertToDtoLight);
     }
 
     @GetMapping("/{id}")
@@ -62,6 +64,10 @@ public class NoteController {
 
     private NoteDto convertToDto(Note note) {
         return modelMapper.map(note, NoteDto.class);
+    }
+
+    private NoteLightDto convertToDtoLight(NoteLight note) {
+        return modelMapper.map(note, NoteLightDto.class);
     }
 
     private Note convertToEntity(NoteDto postDto) {

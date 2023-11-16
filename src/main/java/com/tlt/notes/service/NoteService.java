@@ -1,6 +1,7 @@
 package com.tlt.notes.service;
 
 import com.tlt.notes.model.Note;
+import com.tlt.notes.model.NoteLight;
 import com.tlt.notes.repository.NoteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,7 @@ public class NoteService {
         return noteRepository.findById(id);
     }
 
-    public Page<Note> findAll(Pageable pageable) {
+    public Page<NoteLight> findAll(Pageable pageable) {
         return noteRepository.findAllByOrderByCreatedAtDesc(pageable);
     }
 

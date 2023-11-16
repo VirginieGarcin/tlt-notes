@@ -13,7 +13,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Getter
 @Setter
-public class Note {
+public class Note implements NoteLight {
     @Id
     private String id;
     private String title;
