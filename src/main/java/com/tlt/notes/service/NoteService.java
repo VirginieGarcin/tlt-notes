@@ -68,7 +68,7 @@ public class NoteService {
 
     NoteStatsDto calculateStats(@NotBlank String description) {
         var stats = new NoteStatsDto();
-        var allWords = Arrays.asList(description.split(" "));
+        var allWords = Arrays.asList(description.toLowerCase(Locale.ROOT).replaceAll("\\p{Punct}", "").split(" "));
         var distinctWords = new HashSet<>(allWords);
         distinctWords.forEach(word -> stats.put(word, Collections.frequency(allWords, word)));
 

@@ -34,6 +34,17 @@ class NoteServiceTest {
     }
 
     @Test
+    void calculateStatsIncludingPunctuationSpacesAccentsAndCaps_ReturnsOrderedWordCounts() throws JsonProcessingException {
+        var noteRepository = mock(NoteRepository.class);
+        var service = new NoteService(noteRepository);
+
+        var description = "Note is júst. note is just just just just note.";
+
+        var stats = service.calculateStats(description);
+        assertEquals("{\"just\":4,\"note\":3,\"is\":2,\"júst\":1}", new ObjectMapper().writeValueAsString(stats));
+    }
+
+    @Test
     void deleteById_ExistingNote_DeletesNote() {
         String noteId = "id1";
         when(noteRepository.existsById(noteId)).thenReturn(true);
