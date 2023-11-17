@@ -59,7 +59,7 @@ public class NoteService {
 
     public @NotNull NoteStatsDto getStats(String id) {
         var note = findById(id);
-        if (note != null && StringUtils.hasText(note.getDescription())) {
+        if (StringUtils.hasText(note.getDescription())) {
             return calculateStats(note.getDescription());
         } else {
             return new NoteStatsDto();
