@@ -1,6 +1,7 @@
 package com.tlt.notes.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Null;
 import lombok.*;
 import org.springframework.format.datetime.standard.InstantFormatter;
 
@@ -15,6 +16,7 @@ import java.util.Locale;
 @Setter
 public class NoteLightDto {
     private static final InstantFormatter instantFormat = new InstantFormatter();
+    @Null
     private String id;
     @NotBlank(message = "Title can't be empty")
     private String title;

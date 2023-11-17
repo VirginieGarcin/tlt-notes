@@ -35,7 +35,7 @@ public class NoteController {
     @GetMapping("/{id}")
     @ResponseBody
     public NoteDto getNoteById(@PathVariable("id") String id) {
-        return noteService.findById(id).map(this::convertToDto).orElse(null);
+        return convertToDto(noteService.findById(id));
     }
 
     @GetMapping("/{id}/stats")
@@ -54,8 +54,7 @@ public class NoteController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public NoteDto updateNote(@PathVariable("id") String id, @Valid @RequestBody NoteDto noteDto) {
-        return noteService.findById(id).map(existingNote -> convertToDto(noteService.update(id, convertToEntity(noteDto))))
-                .orElse(null);
+        return convertToDto(noteService.update(id, convertToEntity(noteDto)));
     }
 
     @DeleteMapping("/{id}")

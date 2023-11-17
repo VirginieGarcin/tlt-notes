@@ -1,10 +1,12 @@
 package com.tlt.notes.service;
 
 import com.tlt.notes.dto.NoteStatsDto;
+import com.tlt.notes.exception.NoteNotFoundException;
 import com.tlt.notes.model.Note;
 import com.tlt.notes.model.NoteLight;
 import com.tlt.notes.repository.NoteRepository;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,15 +24,19 @@ public class NoteService {
     }
 
     public void deleteById(String id) {
-        noteRepository.deleteById(id);
+        if (noteRepository.existsById(id)) {
+            noteRepository.deleteById(id);
+        } else {
+            throw new NoteNotFoundException();
+        }
     }
 
     public void deleteAll() {
         noteRepository.deleteAll();
     }
 
-    public Optional<Note> findById(String id) {
-        return noteRepository.findById(id);
+    public @NotNull Note findById(String id) {
+        return noteRepository.findById(id).orElseThrow(NoteNotFoundException::new);
     }
 
     public Page<NoteLight> findAll(Pageable pageable, String tagFilter) {
@@ -41,20 +47,22 @@ public class NoteService {
         }
     }
 
-    public Note create(Note note) {
+    public @NotNull Note create(Note note) {
         return noteRepository.save(note);
     }
 
-    public Note update(String id, Note note) {
+    public @NotNull Note update(String id, Note note) {
+        var initialNote = findById(id);
+        note.setId(initialNote.getId());
         return noteRepository.save(note);
     }
 
-    public NoteStatsDto getStats(String id) {
-        var note = findById(id).orElse(null);
+    public @NotNull NoteStatsDto getStats(String id) {
+        var note = findById(id);
         if (note != null && StringUtils.hasText(note.getDescription())) {
             return calculateStats(note.getDescription());
         } else {
-            return null;
+            return new NoteStatsDto();
         }
     }
 
