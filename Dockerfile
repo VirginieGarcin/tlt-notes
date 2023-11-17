@@ -1,5 +1,8 @@
 FROM amazoncorretto:17
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src src
+RUN ./mvnw install
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","target/notes-1.1.0-SNAPSHOT.jar"]
